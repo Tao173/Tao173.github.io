@@ -758,3 +758,6 @@ a {
   font-size: 16px;
   margin: 4px 8px;
 }
+
+      <iframe width="650" height="450" src="https://embed.windy.com/embed2.html?lat=28.648&lon=110.541&detailLat=35.667&detailLon=139.673&width=650&height=450&zoom=5&level=surface&overlay=wind&product=ecmwf&menu=&message=&marker=&calendar=now&pressure=&type=map&location=coordinates&detail=&metricWind=default&metricTemp=default&radarRange=-1" frameborder="0"></iframe>
+    
