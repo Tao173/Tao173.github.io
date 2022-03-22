@@ -191,7 +191,7 @@
                         </a></li>
                     
                     <!--  -->
-                  <li><img src="https://tao173.github.io/images/avatar.png?v=1647903531971" alt=""
+                  <li><img src="https://tao173.github.io/images/avatar.png?v=1647933217011" alt=""
                     class="menutopavatar"></li>
                 </ul>
             </div><!-- /.navbar-collapse -->
@@ -571,13 +571,13 @@
                 shareInit();
             if (donateChoice)
                 donateInit();
-            if ("valine" == "default"&&!commentsHide) {
+            if ("default" == "default"&&!commentsHide) {
                 $("#comment").hide()
                 commentsHide = true
             }
             lazyload();
             codeinit();
-            if ("valine" == "twikoo") {
+            if ("default" == "twikoo") {
                 //twikoo头像更换
                 setTimeout(replaceAvatar, 3000);
                 setTimeout(replaceAvatar, 8000); //部分博主站点速度加载过慢，再添加一个延迟
@@ -977,7 +977,7 @@ menulist.eq(i).show();
                         <!-- 移动端欢迎页 -->
 <div class="welcome">
     <div class="avatar-border">
-        <img src="https://tao173.github.io/images/avatar.png?v=1647903531971" class="avatar">
+        <img src="https://tao173.github.io/images/avatar.png?v=1647933217011" class="avatar">
     </div>
     <span class="mobiledescribtion"></span>
 </div>
@@ -1124,8 +1124,6 @@ menulist.eq(i).show();
                     <div :class="post.elegcontainer">
                         <img :src="post.feature" alt="" :class="post.imgclass">
                         
-                        <img class="eleg-swordsmen-left" src="https://tao173.github.io/media/images/swordsmenleft.webp" alt="">
-                        
                         <div class="eleg-info">
                             <span class="eleg-title">{{post.title}}</span>
                             <div style="margin-top:15px;">
@@ -1159,8 +1157,6 @@ menulist.eq(i).show();
                                 <a :href="post.link" class="eleg-btn" data-pjax>阅读全文</a>
                             </div>
                         </div>
-                        
-                        <img class="eleg-swordsmen" src="https://tao173.github.io/media/images/swordsmen.webp" alt="">
                         
                         <img :src="post.feature" alt="" :class="post.imgclass">
                     </div>
@@ -1321,7 +1317,7 @@ menulist.eq(i).show();
             <div>
                 
             </div>
-            <div class="copyright" style="color:white;text-align: center;">
+            <div class="copyright" style="color:white;text-align: center;">Copyright © 2020  备案号: 鄂ICP备...号
             </div>
         </div>
 
