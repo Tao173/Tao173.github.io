@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://tao173.github.io</id>
     <title>Tao</title>
-    <updated>2022-03-25T15:41:12.569Z</updated>
+    <updated>2022-03-25T15:55:56.819Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://tao173.github.io"/>
     <link rel="self" href="https://tao173.github.io/atom.xml"/>
@@ -10,6 +10,20 @@
     <logo>https://tao173.github.io/images/avatar.png</logo>
     <icon>https://tao173.github.io/favicon.ico</icon>
     <rights>All rights reserved 2022, Tao</rights>
+    <entry>
+        <title type="html"><![CDATA[使用 GitHub Actions 云编译 OpenWrt]]></title>
+        <id>https://tao173.github.io/post/shi-yong-github-actions-yun-bian-yi-openwrt/</id>
+        <link href="https://tao173.github.io/post/shi-yong-github-actions-yun-bian-yi-openwrt/">
+        </link>
+        <updated>2022-03-25T15:46:39.000Z</updated>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[在OpenWrt上安装和配置Mosquitto]]></title>
+        <id>https://tao173.github.io/post/zai-openwrt-shang-an-zhuang-he-pei-zhi-mosquitto/</id>
+        <link href="https://tao173.github.io/post/zai-openwrt-shang-an-zhuang-he-pei-zhi-mosquitto/">
+        </link>
+        <updated>2022-03-25T15:43:49.000Z</updated>
+    </entry>
     <entry>
         <title type="html"><![CDATA[OpenWrt插件+硬件]]></title>
         <id>https://tao173.github.io/post/1111/</id>

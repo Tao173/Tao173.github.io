@@ -2,23 +2,208 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://tao173.github.io/media/css/live2d.css">
-    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <meta name="description" content="原文链接：https://www.onetransistor.eu/2019/05/mosquitto-mqtt-on-openwrt-router.html?m=1
+在 OpenWrt 上安装 Mosquitto，并使用不同的安全设置配置..." />
+    <meta name="keywords" content="" />
     <link rel="stylesheet" href="https://tao173.github.io/media/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://tao173.github.io/styles/main.css">
-    <link rel="stylesheet" href="https://tao173.github.io/media/css/font-awesome.css">
-    <title>Tao</title>
+    <!-- 代码渲染风格css -->
+    
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.1/build/styles/default.min.css">
+    
+    <!-- 代码高亮插件 -->
+    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.1/build/highlight.min.js"></script>
+    <!-- 代码复制插件 -->
+    <script src="https://cdn.jsdelivr.net/gh/850552586/ericamcdn@0.1/js/clipboard.min.js"></script>
+    <!-- live2d插件 -->
+    <link rel="stylesheet" href="https://tao173.github.io/media/css/live2d.css">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js"></script>
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <link href="https://cdn.bootcdn.net/ajax/libs/font-awesome/5.13.1/css/all.min.css" rel="stylesheet">
+    <!-- 数学公式 -->
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0-beta/dist/katex.min.css"
+        integrity="sha384-9tPv11A+glH/on/wEu99NVwDPwkMQESOocs/ZGXPoIiLE8MU/qkqUcZ3zzL+6DuH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.10.0-beta/dist/katex.min.js"
+        integrity="sha384-U8Vrjwb8fuHMt6ewaCy8uqeUXv4oitYACKdB0VziCerzt011iQ/0TqlSlv8MReCm" crossorigin="anonymous">
+        </script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.10.0-beta/dist/contrib/auto-render.min.js"
+        integrity="sha384-aGfk5kvhIq5x1x5YdvCp4upKZYnA8ckafviDpmWEKp4afOZEqOli7gqSnh8I6enH" crossorigin="anonymous">
+        </script>
+    <script>
+        renderMathInElement(document.body, {
+            delimiters: [{
+                left: "$$",
+                right: "$$",
+                display: true
+            },
+            {
+                left: "$",
+                right: "$",
+                display: false
+            }
+            ]
+        });
+    </script>
+    
+    <title>在OpenWrt上安装和配置Mosquitto</title>
+
+    <!-- 大纲索引css调整 -->
+    
+    <style>
+        .markdownIt-TOC {
+            padding-left: 2px;
+            width: 100%;
+        }
+
+        .markdownIt-TOC li {
+            padding-left: 2%;
+        }
+    </style>
+    
 </head>
 
-
 <body>
+    <div id="landlord">
+        <div class="message" style="opacity:0"></div>
+        <canvas id="live2d" width="240" height="250" class="live2d"></canvas>
+    </div>
+    <div id="domainname" style="display:none">https://tao173.github.io</div>
     <div id="content">
-        <div class="nav-large">
-            <div class="row">
-                <!--------------- pc端菜单栏👇 ---------------->
-                <div class="side"><head>
+        <div>
+            <!----------- 移动端导航栏👇 ----------------->
+            <div id="bar">
+                <style>
+  .navmobile {
+    z-index: 15;
+    max-height: 40vh;
+    overflow-y: scroll;
+    overflow-x: hidden;
+  }
+
+  @media screen and (max-width: 1200px) {
+    .navbar {
+      max-width: 100vw;
+    }
+  }
+
+  @media screen and (max-width:1200px) and (min-width: 768px) {
+    @media (min-width: 768px) {
+      .navbar-nav {
+        float: right;
+        margin: 0;
+      }
+    }
+  }
+
+  @media screen and (max-width:768px) {
+    .mbapspan {
+      padding: 0;
+    }
+  }
+</style>
+<div class="pjaxloading"  onclick="pjaxloadingClose()">
+  <div class="loadingbackground"></div>
+  <div id="loading">
+    <div class="loading">
+    </div>
+  </div>
+</div>
+<nav class="navbar navbar-inverse navbar-fixed-top navmobile">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#barmenu"
+        aria-expanded="false" id="barbutton">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a data-pjax class="navbar-brand" style="color:white" href="https://tao173.github.io">Tao&nbsp;&nbsp;|</a>
+      <span class="navbar-brand mbapspan"><i id="mbaplayer" class="fa fa-play-circle-o" aria-hidden="true"
+          style="font-size: 28px;top: 12px;position: absolute;" onclick="aplayerPlay();"></i></span>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="barmenu">
+      <ul class="nav navbar-nav">
+        
+        
+        <li>
+          <a data-pjax href="/" style="color:white">
+            首页
+          </a>
+        </li>
+        
+        
+        
+        <li>
+          <a data-pjax href="/archives" style="color:white">
+            归档
+          </a>
+        </li>
+        
+        
+        
+        <li>
+          <a data-pjax href="/tags" style="color:white">
+            标签
+          </a>
+        </li>
+        
+        
+        
+        <li>
+          <a data-pjax href="/post/about" style="color:white">
+            关于
+          </a>
+        </li>
+        
+        
+        
+        
+          
+        </ul>
+      </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+  </nav>
+
+
+  <!-- 引入jQuery核心js文件 -->
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js"></script>
+  <script>
+    let btstate = false;
+    var bt = $("#barbutton");
+    var bm = $("#barmenu");
+    bt.click(function () {
+      dropdown();
+    })
+    function dropdown() {
+      console.log(btstate);
+      //下拉
+      if (btstate == false) {
+        bt.removeClass("collapsed");
+        bt.attr("aria-expanded", "true");
+        bm.attr("aria-expanded", "true")
+        bm.fadeIn(700);
+        btstate = true;
+      }
+      else {
+        bt.addClass("collapsed");
+        bt.attr("aria-expanded", "false");
+        bm.removeClass("in");
+        bm.hide();
+        bm.attr("aria-expanded", "false");
+        btstate = false;
+      }
+    }
+  </script> 
+            </div>
+            <!----------- 移动端导航栏👆 ----------------->
+
+            <!--------------- pc端菜单栏👇 ---------------->
+            <div class="side"><head>
     <link rel="stylesheet" href="https://tao173.github.io/media/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://tao173.github.io/styles/main.css">
     
@@ -852,172 +1037,233 @@ menulist.eq(i).show();
     }
 </script>
 <!----夜间模式👆--></div>
-                <!--------------- pc端菜单栏👆 ---------------->
-               
-                <!----------- 移动端导航栏👇 ----------------->
-                <div class="tbar"> <style>
-  .navmobile {
-    z-index: 15;
-    max-height: 40vh;
-    overflow-y: scroll;
-    overflow-x: hidden;
-  }
+            <!--------------- pc端菜单栏👆 ---------------->
 
-  @media screen and (max-width: 1200px) {
-    .navbar {
-      max-width: 100vw;
-    }
-  }
+            <!-- ----------------左侧菜单栏html 👇-------------------------------------->
+            
+            <!--------------- 顶部菜单栏html👇--------->
+            <div>
+                <div class="col-lg-3"></div>
+                <!-- main标签，pjax渲染时加载以下内容👇 -->
+                <div id="main" class="col-xs-12 col-sm-12 col-md-12  col-lg-6 posttop" style="padding:0;">
+                    <div class="readingmode" onclick="readingmode()">阅</div>
+                    <link rel="stylesheet" href="https://tao173.github.io/media/css/font-awesome.css">
 
-  @media screen and (max-width:1200px) and (min-width: 768px) {
-    @media (min-width: 768px) {
-      .navbar-nav {
-        float: right;
-        margin: 0;
-      }
-    }
-  }
-
-  @media screen and (max-width:768px) {
-    .mbapspan {
-      padding: 0;
-    }
-  }
-</style>
-<div class="pjaxloading"  onclick="pjaxloadingClose()">
-  <div class="loadingbackground"></div>
-  <div id="loading">
-    <div class="loading">
-    </div>
-  </div>
-</div>
-<nav class="navbar navbar-inverse navbar-fixed-top navmobile">
-  <div class="container-fluid">
-    <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#barmenu"
-        aria-expanded="false" id="barbutton">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a data-pjax class="navbar-brand" style="color:white" href="https://tao173.github.io">Tao&nbsp;&nbsp;|</a>
-      <span class="navbar-brand mbapspan"><i id="mbaplayer" class="fa fa-play-circle-o" aria-hidden="true"
-          style="font-size: 28px;top: 12px;position: absolute;" onclick="aplayerPlay();"></i></span>
-    </div>
-
-    <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse" id="barmenu">
-      <ul class="nav navbar-nav">
-        
-        
-        <li>
-          <a data-pjax href="/" style="color:white">
-            首页
-          </a>
-        </li>
-        
-        
-        
-        <li>
-          <a data-pjax href="/archives" style="color:white">
-            归档
-          </a>
-        </li>
-        
-        
-        
-        <li>
-          <a data-pjax href="/tags" style="color:white">
-            标签
-          </a>
-        </li>
-        
-        
-        
-        <li>
-          <a data-pjax href="/post/about" style="color:white">
-            关于
-          </a>
-        </li>
-        
-        
-        
-        
-          
-        </ul>
-      </div><!-- /.navbar-collapse -->
-    </div><!-- /.container-fluid -->
-  </nav>
-
-
-  <!-- 引入jQuery核心js文件 -->
-  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js"></script>
-  <script>
-    let btstate = false;
-    var bt = $("#barbutton");
-    var bm = $("#barmenu");
-    bt.click(function () {
-      dropdown();
-    })
-    function dropdown() {
-      console.log(btstate);
-      //下拉
-      if (btstate == false) {
-        bt.removeClass("collapsed");
-        bt.attr("aria-expanded", "true");
-        bm.attr("aria-expanded", "true")
-        bm.fadeIn(700);
-        btstate = true;
-      }
-      else {
-        bt.addClass("collapsed");
-        bt.attr("aria-expanded", "false");
-        bm.removeClass("in");
-        bm.hide();
-        bm.attr("aria-expanded", "false");
-        btstate = false;
-      }
-    }
-  </script> </div>
-                <!----------- 移动端导航栏👆 ----------------->
-
-                <!-- ----------------左侧菜单栏html 👇-------------------------------------->
+<body>
+    <div class="allcontent" id="postdetail">
+        <div class="postshow postpadding" style="padding-bottom: 0;">
+            
+            <div class="postdetailimg">
                 
-                        <div id="main" class="col-xs-12 col-sm-12 col-md-12 col-lg-6 topindex">
-                            <div class="mobilebar">
-                                <img src="" alt="" class="plbg">
+                <img src="/media/images/postdefault.png" class="postimage">
+                
+            </div>
+            <div class="postinfo-detail">
+                <div class="postdate"><i class="fa fa-calendar"></i>2022-03-25</div>
+            <div class="poststatus postdate"><i class="fa fa-clock-o"></i> 9 min read</div>
+            <div class="posttag">
+                
+            </div>
+        </div>
+        
+        <div id="articlecontent">
+            <div id="texttitle" style="text-align: center">
+                <h2 id="ptitle">在OpenWrt上安装和配置Mosquitto</h2>
+                <!-- id 将作为查询条件 -->
+                <div id="pl" style="display:none">https://tao173.github.io/post/zai-openwrt-shang-an-zhuang-he-pei-zhi-mosquitto/</div>
+                <div id="rootaddr" style="display:none">https://tao173.github.io</div>
+                
+            </div>
+            <div class="text ">
+                <h2 id="原文链接httpswwwonetransistoreu201905mosquitto-mqtt-on-openwrt-routerhtmlm1">原文链接：https://www.onetransistor.eu/2019/05/mosquitto-mqtt-on-openwrt-router.html?m=1</h2>
+<p>在 OpenWrt 上安装 Mosquitto，并使用不同的安全设置配置多个侦听器：未加密、TLS PSK 和 TLS 证书加密<br>
+上一篇文章是关于MQTT安全层，运行本地MQTT服务器的优势以及如何构建物联网。OpenWrt 路由器应准备好安装和设置服务器（代理）软件。软件存储库包含Eclipse Mosquitto软件的两个变体。其中一个是在没有 SSL 支持的情况下构建的。如果安装该客户端，您将无法接受安全客户端。启用SSL的变体需要更多的内部存储空间，这是它们提供两个版本的主要原因。</p>
+<p>我使用的路由器具有Broadcom SoC和16 MB的内部存储空间。安装支持SSL的构建版本Mosquitto后，仍有86%的可用空间。在这篇文章中，我将向您展示如何配置 Mosquitto 代理以侦听多个端口并接受具有不同安全设置的客户端。这是因为并非所有具有网络连接的微控制器都具有足够的 TLS/SSL 处理能力。而且，正如我在上一篇文章中所说，本地网络中的设备位于（至少一个）防火墙后面，只要没有其他人对网络具有物理访问权限，MQTT客户端和服务器之间的传输加密就不是真正需要的。但是，通过互联网的远程客户端需要TLS / SSL。</p>
+<p>在OpenWrt上安装和配置Mosquitto™<br>
+安装在OpenWrt上<br>
+确保OpenWrt本身作为网络客户端可以连接到互联网。转到网络 - 诊断。如果无法 ping 有效域，请转到&quot;网络&quot; - DHCP 和 DNS，然后在&quot;服务器设置&quot; - &quot;常规设置&quot; - &quot;DNS 转发&quot;中，添加服务器 8.8.8.8 和 8.8.4.4。通过 WAN 提供的 DNS 服务器无法到达 LAN 区域，这就是您必须设置自定义服务器的原因。</p>
+<p>转到&quot;系统&quot;-&quot;软件&quot;-&quot;操作&quot;。首先单击&quot;更新列表&quot;，然后在完成搜索后搜索mosquitto。在&quot;可用包&quot;列表中查找 mosquitto-ssl 并进行安装。路由器本身可以发布 MQTT 数据包，并接收到/从代理接收 MQTT 数据包。为了能够做到这一点，请安装mosquitto-client-ssl。如果通过串行端口或通过网络 SSH 连接到路由器，也可以从命令行执行安装。</p>
+<p>opkg update<br>
+opkg install mosquitto-ssl<br>
+opkg install mosquitto-client-ssl libmosquitto-ssl<br>
+此时，服务器应正在运行。转到状态 - 进程并搜索&quot;mosquitto&quot;。如果找不到它，则需要进入控制台，以启用并启动它。</p>
+<p>/etc/init.d/mosquitto enable<br>
+/etc/init.d/mosquitto restart<br>
+使用您喜欢的任何客户端并测试与服务器的连接。如果您关注了我之前的帖子，服务器地址如下：</p>
+<p>mqtt-broker.lan，用于连接到OpenWrt路由器网络（又名物联网网络）的设备。这不是多播DNS地址，它由路由器的DNS服务器解析;<br>
+192.168.1.222（或您在网关的 DHCP 服务器中保留的任何内容），用于从家庭网络连接到代理的设备（通过 OpenWrt 路由器的 WAN 端口路由的流量）。<br>
+从物联网网络外部测试连接。您可以在移动设备上使用 MQTT Dash，或在计算机上使用 MQTT.fx，MQTT Explorer。默认情况下，不需要 TLS/SSL 和用户/密码。港口是1883年。</p>
+<p>编辑配置<br>
+要编辑存储在路由器上的配置文件并上传证书，您必须通过 SCP 连接到它。我正在使用WinSCP。它是Windows的免费软件，但我在Ubuntu上的Wine中运行它，因为我找不到Linux的SCP GUI。作为客户端连接到 OpenWrt 路由器（物联网网络）的 LAN 网络中。</p>
+<p>WinSCP 连接设置<br>
+WinSCP 连接设置</p>
+<p>上面屏幕截图左侧列表中的所有连接预设都是有效的。虽然第一个（root@192.168.1.222）是WAN IP，但它也可以从LAN访问。使用当前的防火墙设置，仅从 LAN。某些端口需要在 WAN 端打开，以允许通过 WAN 进行访问。另外两个是路由器的IP地址和由路由器的DNS服务器解析为其自己的IP的域名。单击&quot;登录&quot;后，它将显示一条警告。接受它，然后单击是/更新以通过 SCP 启动连接。</p>
+<p>您将只在右列上工作。浏览到 /etc/mosquitto 并重命名（甚至删除）mosquitto.conf。如果打开它，您将看到它只是一个没有使用任何参数的模板。对于以下方案，我们将创建自己的配置：</p>
+<p>默认侦听器：不安全，位于端口 1883 上，用于不支持 TLS/SSL 的内容。端口被阻止远程客户端（通过互联网）。<br>
+安全侦听器：在端口 8883 上，带有 CA、证书和密钥，用于远程访问（本地客户端和事物也可以使用它）<br>
+安全侦听器：在端口 8884 上，使用 PSK（预共享密钥），用于操作。端口被阻止远程客户端（通过互联网）。<br>
+接下来，我将为所有这些情况创建配置。</p>
+<p>不安全的侦听器<br>
+对于不安全的客户端，建议的端口为 1883。首先，应为客户端创建一些凭据。使用 PuTTY 通过 SSH 或串行端口连接到路由器。WinSCP和PuTTY可以同时连接。使用此命令创建具有第一个用户的passwd文件（在我的示例中用户名为&quot;Thing01&quot;;可以替换为所需的任何名称）：</p>
+<p>mosquitto_passwd -c /etc/mosquitto/passwords.txt Thing01<br>
+使用此命令添加更多用户：</p>
+<p>mosquitto_passwd /etc/mosquitto/passwords.txt Thing02<br>
+继续并在WinSCP中打开该文件（/etc/mosquitto/passwords.txt）。您应该会看到添加的（两个）用户和加密的密码。让我们配置默认侦听器。在 WinSCP 中打开 mosquitto.conf 并粘贴以下配置：</p>
+<p>#Default listener<br>
+port 1883<br>
+allow_anonymous false<br>
+password_file /etc/mosquitto/passwords.txt<br>
+使用 从命令行 （PuTTY） 停止 Mosquitto。现在启动它并详细打开。/etc/init.d/mosquitto stop</p>
+<p>mosquitto -v -c /etc/mosquitto/mosquitto.conf<br>
+我使用在 Ubuntu 本地客户端上运行的 MQTT.fx 和 MQTT Explorer 测试了服务器。以下是配置连接的方法。</p>
+<p>MQTT 资源管理器中的连接设置<br>
+MQTT 资源管理器中的连接设置</p>
+<p>不安全的侦听器已准备就绪。为受保护的侦听器生成 SSL 证书和密钥并不是一个简短的主题。您可以在以后的帖子中阅读有关它的信息。</p>
+<p>PSK 安全侦听器<br>
+建议在性能受限的环境中使用预共享密钥 （TLS PSK） 加密 MQTT 传输，例如 CPU 功耗有限的微控制器。密钥由数字和字母 A 到 F（十六进制数字）组成。服务器和客户端都必须知道此密钥。</p>
+<p>PSK 存储在文本文件中，就像用户凭据一样。我们将在 /etc/mosquitto 中创建该文件。使用 WinSCP，右键单击该文件夹，然后选择&quot;新建 - 文件&quot;。输入一个名称（&quot;preshared.keys&quot;），文本编辑器将打开并显示此新文件。格式为提示：键。提示可以被视为用户名，而密钥是密码。如何生成密钥？由于我使用的是linux，因此我打开任何文件夹中的终端（控制台），并计算文件的md5sum。这些是我的PSK条目：</p>
+<p>Thing01:20a7da651a0743214cde51050398cffb<br>
+Thing02:eda7b5211a6e306c02de401900dc63bc<br>
+保存并关闭编辑器。继续打开mosquitto.conf。默认侦听器的设置（从上面）应该已经存在。PSK 文件选项是全局的，而 PSK 加密的使用是按侦听器。将内容替换为以下内容：</p>
+<h1 id="global">Global</h1>
+<h1 id="must-be-set-before-configuring-listeners">Must be set before configuring listeners</h1>
+<p>per_listener_settings true</p>
+<h1 id="default-listener">Default listener</h1>
+<p>port 1883</p>
+<h1 id="psk-listener">PSK listener</h1>
+<p>listener 8884<br>
+psk_hint &quot;mqttbroker&quot;<br>
+use_identity_as_username true</p>
+<h1 id="security">Security</h1>
+<p>allow_anonymous false<br>
+password_file /etc/mosquitto/passwords.txt<br>
+psk_file /etc/mosquitto/preshared.keys<br>
+配置文件中参数的顺序应与原始文件中的顺序匹配。否则，可能会发生错误。为了测试此配置，我使用了mosquitto_pub。</p>
+<p>mosquitto_pub -h mqtt-broker.lan -p 8884 -t test -m &quot;Hello PSK&quot; --psk-identity Thing01 --psk 20a7da651a0743214cde51050398cffb<br>
+如果出现问题，它会告诉您发生了TLS错误。不是很有用。设置为 true 的选项将禁用用户/密码身份验证。不建议使用多种身份验证方法。使用 PSK 提示中的用户名标识时禁用默认 MQTT 用户/密码身份验证。use_identity_as_username</p>
+<p>此时，我有一个在 OpenWrt 路由器上运行的 MQTT 代理，该代理在端口 1883 上侦听不安全客户端，在端口 8884 上侦听 TLS PSK 安全客户端。在下一篇文章中，我将添加基于证书的TLS加密，服务器配置完成。各种客户端配置如下（ESP8266、ESP32 等）</p>
+<p>引用</p>
+
+            </div>
+            <hr style="width: 80%;">
+            
+            <div class="postfooter">
+                <ul class="post-copyright">
+                    <li><strong>文章作者：</strong></li>
+            <li><strong>原文链接：</strong>https://tao173.github.io/post/zai-openwrt-shang-an-zhuang-he-pei-zhi-mosquitto/</li>
+            <li><strong>版权声明：</strong>本博客所有文章除特别声明外，均采用<i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA
+                许可协议。转载请注明出处！</li>
+            </ul>
+        </div>
+        
+        <div id="otherpost">
+            
+            <a  data-pjax class="prev-post-pc" href="https://tao173.github.io/post/shi-yong-github-actions-yun-bian-yi-openwrt/"  style="color: black;">
+                <div id="ppcontainer">
+                    
+                    
+                    <img src="/media/images/postdefault.png" style="width: 100%;" class="opimg">
+                    
+                    
+                    <h4 class="optitle">使用 GitHub Actions 云编译 OpenWrt</h4>
+                </div>
+            </a>
+            <div class="prev-post">
+                上一篇 <a  data-pjax href="https://tao173.github.io/post/shi-yong-github-actions-yun-bian-yi-openwrt/">使用 GitHub Actions 云编译 OpenWrt</a>
+            </div>
+            
+            
+            <a data-pjax class="next-post-pc" href="https://tao173.github.io/post/1111/"  style="color: black;">
+                <div id="npcontainer">
+                    
+                    
+                    <img src="/media/images/postdefault.png" style="width: 100%;" class="opimg">
+                    
+                    
+                    <h4 class="optitle">OpenWrt插件+硬件</h4>
+                </div>
+            </a>
+            <div class="next-post">
+                下一篇 <a  data-pjax href="https://tao173.github.io/post/1111/">OpenWrt插件+硬件</a>
+            </div>
+            
+        </div>
+    </div>
+    </div>
+    </div>
+    <!-- 弹窗 -->
+    <div id="myModal" class="modal">
+        <img class="modal-content" id="img01">
+    </div>
+</body>
 <script>
-    var bgchoice = "default";
-    if(bgchoice=='default')
-        var plbgurl = ""
-    else  
-        var plbgurl = ""
-    $(".plbg").attr("src",plbgurl);
-    $(".plbg").fadeIn(200);
+    //文章阅读热度
+    var pl = $("#pl").html();
+    var rootaddr = $("#rootaddr").html();
+    pl = pl.replace(rootaddr, "");
+    $("#hotnum").attr('id', pl);
 </script>
+                    <div class="toc-container">
+                        <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#%E5%8E%9F%E6%96%87%E9%93%BE%E6%8E%A5httpswwwonetransistoreu201905mosquitto-mqtt-on-openwrt-routerhtmlm1">原文链接：https://www.onetransistor.eu/2019/05/mosquitto-mqtt-on-openwrt-router.html?m=1</a></li>
+</ul>
+</li>
+<li><a href="#global">Global</a></li>
+<li><a href="#must-be-set-before-configuring-listeners">Must be set before configuring listeners</a></li>
+<li><a href="#default-listener">Default listener</a></li>
+<li><a href="#psk-listener">PSK listener</a></li>
+<li><a href="#security">Security</a></li>
+</ul>
+
+                    </div>
+                    <div class="tog">
+                        <div class="toggleContainer">
+                            <div class="toggle">
+                                <i class="fas fa-angle-double-up"></i>
                             </div>
-                            <script>
-                                $(".tag").each(function () {
-                                    var rgb = '#' + Math.floor((Math.random()) * 0xffffff).toString(16);;
-                                    $(this).css('color', rgb);
-                                });
-                            </script>
-                            <div class="tagsbackgroundtop"></div>
+                        </div>
+                    </div>
+                    <!---------------------------- 评论系统👇 ------------------------->
+                    <div id="comment" class="comment">
+                        <div class="commentcontainer">
                             
-                                <img class="tagsimg" src="/media/images/tagimg.png" alt="">
                                 
-                            <div class="tags-container">
+                                    
+                                        <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<div id="gitalk-container"></div>
+
+<script>
+
+  var gitalk = new Gitalk({
+    clientID: '44acdaa705122704109b',
+    clientSecret: '1e7a42ef997841128437f6fdd1db180193b1c845',
+    repo: 'Tao173.github.io',
+    owner: 'Tao173',
+    admin: ['Tao173'],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+
+  gitalk.render('gitalk-container')
+
+</script>
+
+                                    
+                                    
+                                
+                            
+                        </div>
+                    </div>
+                    <!---------------------------- 评论系统👆 ------------------------->
+
+                    <!-------------- 底部栏信息👇 -------------------->
+                    <div style="margin-top:5vh">
                         
-                                <a data-pjax class="tag" href="https://tao173.github.io/tag/OCEEjLCH5/"># HA</a>
-                                
-                                <a data-pjax class="tag" href="https://tao173.github.io/tag/QjG-Y7969/"># Gridea</a>
-                                
-                            </div>
-                            <div style="display: none;">
-                                
-                                    <style>
+                        <style>
     .copyright {
         font-size: 15px;
         color: #d9d9d9;
@@ -1093,15 +1339,22 @@ menulist.eq(i).show();
     let intervalId = setInterval("createtime()", 250);
 </script>
 
-                                    
-                            </div>
-                        </div>
                         
-                <!--------------- ---顶部菜单栏html👆--------->
-                <div class="col-xs-6 col-sm-3"></div>
+                    </div>
+                    <!-------------- 底部栏信息👆 -------------------->
+                </div>
+                <!-- main标签，pjax渲染时加载以上内容👆 -->
+                <div class="col-md-2 col-lg-3">
+                </div>
+                <div id="bg">
+                </div>
             </div>
+        <!--------------- 顶部菜单栏html👆--------->
+        
+        </div>
+        <!-- aplayer播放器加载👇 -->
             
-                        <head>
+            <head>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css">
 </head>
 
@@ -1163,37 +1416,37 @@ menulist.eq(i).show();
         }
     }
 </script>
-                        
-        </div></div>
-        <div id="bg">
-        </div>
-        <!-- 背景图加载方式👇 -->
-        <div id="bgchoice" style="display: none">default
-                    </div>
-                    
-                    <div id="bgurl" style="display:none">/media/images/bgimg.png</div>
-                       
-        </div>
-        <!-- 背景图加载方式👆 -->
-        <div id="landlord">
-            <div class="message" style="opacity:0"></div>
-            <canvas id="live2d" width="240" height="250" class="live2d"></canvas>
-        </div>
-        <div id="domainname" style="display:none">https://tao173.github.io
+            
+        <!-- aplayer播放器加载👆 -->
+    </div>
+    <!-- 背景图加载方式👇 -->
+    <div id="bgchoice" style="display: none">default
                 </div>
+                
+                <div id="bgurl" style="display:none">/media/images/bgimg.png</div>
+                
+    <!-- 背景图加载方式👆 -->
 </body>
 
-</html>
-<!-- 标签框随机色彩功能👇 -->
 <script>
-    $(".tag").each(function () {
-        var rgb = '#' + Math.floor((Math.random()) * 0xffffff).toString(16);;
-        $(this).css('color', rgb);
-    });
+    //初始化
+    //更换twikoo头像
+    setTimeout(replaceAvatar,1000);
+    setTimeout(replaceAvatar,2000);
+    setTimeout(replaceAvatar,8000);
+    // --------为每张图片添加懒加载（lazyload）标签-->懒加载功能 👇------------
+    lazyload();
+    //为文章内所有代码块添加代码复制功能 👇
+    codeinit();
+    // ------代码高亮显示功能-------------
+    hljs.initHighlightingOnLoad();
+    if (shareChoice)
+        shareInit();
+    if (donateChoice)
+        donateInit();
 </script>
-<!-- 标签框随机色彩功能👆 -->
 
-<!-------------------- live2d功能👇 --------------------------->
+<!------------------ 加载live2d模型功能（看板娘）👇 ---------------->
 
 <script type="text/javascript">
     var message_Path = '/live2d/'
@@ -1205,7 +1458,29 @@ menulist.eq(i).show();
     loadlive2d("live2d", "https://tao173.github.io/media/live2d/assets/tororo.model.json");
 </script>
 
-<!-------------------- live2d功能👆 --------------------------->
+<!------------------ 加载live2d模型功能（看板娘）👆 ---------------->
+
+
+<!----------------------- 返回顶部按钮功能👇 --------------------->
+<script>
+    $(function () {
+        $('.toggleContainer').click(function () {
+            $('html,body').animate({
+                scrollTop: '0px'
+            }, 800);
+        });
+        $(window).scroll(function () {
+            var st = $(window).scrollTop();
+            if (st > 30) {
+                $(".toggleContainer").fadeIn(400);
+            } else {
+                $(".toggleContainer").fadeOut(100);
+            }
+        });
+    });
+</script>
+<!----------------------- 返回顶部按钮功能👆 --------------------->
+
 
 <!------------ 加载全局背景图功能👇（开始时没有写好，这功能有点鸡肋/(ㄒoㄒ)/~~） -->
 <script>
@@ -1225,3 +1500,28 @@ menulist.eq(i).show();
     }
 </script>
 <!------------ 加载全局背景图功能👆（开始时没有写好，这功能有点鸡肋/(ㄒoㄒ)/~~） -->
+
+
+
+
+
+<script>
+    //加载后的事件同步（阅读量、移动端评论等
+    window.onload = function () {
+    //代码块高亮渲染
+    document.querySelectorAll('pre code').forEach((block) => {
+            hljs.highlightBlock(block);
+    });
+        getHotnum();
+        var sharepc = $(".share").eq(0).html();
+        $(".share").eq(1).html(sharepc);   //插件只会寻找一个分享标签渲染，所以需要手动添加到移动端
+        aplayerbtnInit();
+        $(".hljs").css({
+            "padding": "20px"
+        })
+    }
+</script>
+
+<!-- <script src="https://tao173.github.io/media/js/av-min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/leancloud-storage@3.13.0/dist/av-min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/leancloud-storage@4.6.1/dist/av-live-query-min.js"></script> -->
