@@ -366,7 +366,7 @@
                     
                     
                     <!--  -->
-                  <li><img src="https://tao173.github.io/images/avatar.png?v=1648225371586" alt=""
+                  <li><img src="https://tao173.github.io/images/avatar.png?v=1648524385496" alt=""
                     class="menutopavatar"></li>
                 </ul>
             </div><!-- /.navbar-collapse -->
@@ -1142,7 +1142,7 @@ psk_file /etc/mosquitto/preshared.keys<br>
 <p>mosquitto_pub -h mqtt-broker.lan -p 8884 -t test -m &quot;Hello PSK&quot; --psk-identity Thing01 --psk 20a7da651a0743214cde51050398cffb<br>
 如果出现问题，它会告诉您发生了TLS错误。不是很有用。设置为 true 的选项将禁用用户/密码身份验证。不建议使用多种身份验证方法。使用 PSK 提示中的用户名标识时禁用默认 MQTT 用户/密码身份验证。use_identity_as_username</p>
 <p>此时，我有一个在 OpenWrt 路由器上运行的 MQTT 代理，该代理在端口 1883 上侦听不安全客户端，在端口 8884 上侦听 TLS PSK 安全客户端。在下一篇文章中，我将添加基于证书的TLS加密，服务器配置完成。各种客户端配置如下（ESP8266、ESP32 等）</p>
-<p>引用</p>
+<figure data-type="image" tabindex="1"><img src="https://tao173.github.io/post-images/1648524378322.png" alt="" loading="lazy"></figure>
 
             </div>
             <hr style="width: 80%;">
