@@ -255,7 +255,7 @@ Github Ac­tions 是 Mi­crosoft 收购 GitHub 后推出的 C..." />
                         src='https://tao173.github.io/media/images/music.png' alt="音乐播放器" class="musicbtn"></i></a>
         </div>
         <div class="avatar-border">
-            <img src="https://tao173.github.io/images/avatar.png?v=1648821818702" class="avatar">
+            <img src="https://tao173.github.io/images/avatar.png?v=1648822094201" class="avatar">
         </div>
         <div class="sitename">Tao</div>
         <span class="description" data-text='["温故而知新"]'>&nbsp;</span>
@@ -384,7 +384,7 @@ Github Ac­tions 是 Mi­crosoft 收购 GitHub 后推出的 C..." />
                 </div>
                 
             </div>
-            <div class="copyright" style="color:white;text-align: center;">Copyright © 2020  备案号: 鄂ICP备...号
+            <div class="copyright" style="color:white;text-align: center;">
             </div>
         </div>
 
@@ -775,13 +775,13 @@ Github Ac­tions 是 Mi­crosoft 收购 GitHub 后推出的 C..." />
                 shareInit();
             if (donateChoice)
                 donateInit();
-            if ("default" == "default"&&!commentsHide) {
+            if ("valine" == "default"&&!commentsHide) {
                 $("#comment").hide()
                 commentsHide = true
             }
             lazyload();
             codeinit();
-            if ("default" == "twikoo") {
+            if ("valine" == "twikoo") {
                 //twikoo头像更换
                 setTimeout(replaceAvatar, 3000);
                 setTimeout(replaceAvatar, 8000); //部分博主站点速度加载过慢，再添加一个延迟
@@ -1085,6 +1085,11 @@ menulist.eq(i).show();
                 <div id="rootaddr" style="display:none">https://tao173.github.io</div>
                 
                     
+                    <span id="hotnum">
+                        <h4><i class="fa fa-eye" aria-hidden="true" style="color: #FF8C00;"></i>&nbsp;&nbsp;热度</i>: <i
+                                class="hotnum">loading...</i></h4>
+                    </span>
+                    
                 
             </div>
             <div class="text ">
@@ -1359,29 +1364,35 @@ GitHub Ac­tions 的 ma­cOS 虚拟机性能要高于 Ubuntu 虚拟机，所以�
                             
                                 
                                     
-                                        <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
-<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+        <div id="vcomments">
+        </div>
+        <script>
+            var valine = new Valine();
+            var curpath = window.location.pathname;
+            if (curpath[curpath.length - 1] != '/')
+                curpath += '/'
+            valine.init({
+                el: '#vcomments',
+                appId: 'LaGLE41kBqdNdnLIPLzYHmq0-gzGzoHsz',
+                appKey: '9DkNy0NchOMEphC9bsfxyg1L',
+                avatar: 'retro',
+                pageSize: 10,
+                placeholder: '既然来了，何不畅所欲言呢？',
+                recordIP: true,
+                path: curpath //[重点] 记得添加path路径
+            });
+        </script>
+        <script type="text/javascript">
+            var jrsc = '既然来了，何不畅所欲言呢？';
+            jinrishici.load(function (result) {
+                // 自己的处理逻辑
+                jrsc = result.data.content + "\n「" + result.data.origin.title + "」" + result.data.origin
+                    .dynasty + " · " + result.data.origin.author;
+            });
+        </script>
 
-<div id="gitalk-container"></div>
 
-<script>
-
-  var gitalk = new Gitalk({
-    clientID: '44acdaa705122704109b',
-    clientSecret: '1e7a42ef997841128437f6fdd1db180193b1c845',
-    repo: 'Tao173.github.io',
-    owner: 'Tao173',
-    admin: ['Tao173'],
-    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
-    distractionFreeMode: false  // Facebook-like distraction free mode
-  })
-
-  gitalk.render('gitalk-container')
-
-</script>
-
-                                    
-                                    
+                                    <div class="clear"></div>
                                 
                             
                         </div>
