@@ -28,42 +28,19 @@ Gridea 主页
     <link href="https://cdn.bootcdn.net/ajax/libs/font-awesome/5.13.1/css/all.min.css" rel="stylesheet">
     <!-- 数学公式 -->
     
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0-beta/dist/katex.min.css"
-        integrity="sha384-9tPv11A+glH/on/wEu99NVwDPwkMQESOocs/ZGXPoIiLE8MU/qkqUcZ3zzL+6DuH" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/katex@0.10.0-beta/dist/katex.min.js"
-        integrity="sha384-U8Vrjwb8fuHMt6ewaCy8uqeUXv4oitYACKdB0VziCerzt011iQ/0TqlSlv8MReCm" crossorigin="anonymous">
-        </script>
-    <script src="https://cdn.jsdelivr.net/npm/katex@0.10.0-beta/dist/contrib/auto-render.min.js"
-        integrity="sha384-aGfk5kvhIq5x1x5YdvCp4upKZYnA8ckafviDpmWEKp4afOZEqOli7gqSnh8I6enH" crossorigin="anonymous">
-        </script>
-    <script>
-        renderMathInElement(document.body, {
-            delimiters: [{
-                left: "$$",
-                right: "$$",
-                display: true
-            },
-            {
-                left: "$",
-                right: "$",
-                display: false
-            }
-            ]
-        });
-    </script>
-    
     <title>Hello Gridea</title>
 
     <!-- 大纲索引css调整 -->
     
     <style>
         .markdownIt-TOC {
+            margin-left: 28%;
             padding-left: 2px;
-            width: 100%;
+            width: 80%;
         }
 
         .markdownIt-TOC li {
-            padding-left: 2%;
+            padding-left: 8%;
         }
     </style>
     
@@ -170,6 +147,9 @@ Gridea 主页
         
         
           
+        <li><a data-pjax href="https://tao173.github.io/friends" style="color:white">友链</a></li>
+
+        
         </ul>
       </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
@@ -229,30 +209,6 @@ Gridea 主页
 
     <!--------- 数学公式👇---- -->
     
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0-beta/dist/katex.min.css"
-        integrity="sha384-9tPv11A+glH/on/wEu99NVwDPwkMQESOocs/ZGXPoIiLE8MU/qkqUcZ3zzL+6DuH" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/katex@0.10.0-beta/dist/katex.min.js"
-        integrity="sha384-U8Vrjwb8fuHMt6ewaCy8uqeUXv4oitYACKdB0VziCerzt011iQ/0TqlSlv8MReCm" crossorigin="anonymous">
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/katex@0.10.0-beta/dist/contrib/auto-render.min.js"
-        integrity="sha384-aGfk5kvhIq5x1x5YdvCp4upKZYnA8ckafviDpmWEKp4afOZEqOli7gqSnh8I6enH" crossorigin="anonymous">
-    </script>
-    <script>
-        renderMathInElement(document.body, {
-            delimiters: [{
-                    left: "$$",
-                    right: "$$",
-                    display: true
-                },
-                {
-                    left: "$",
-                    right: "$",
-                    display: false
-                }
-            ]
-        });
-    </script>
-    
     <!--------- 数学公式👆----------------- -->
     <!--------- daovocie功能👇 ------------------->
     
@@ -298,134 +254,190 @@ Gridea 主页
 
     <!--------------- 左侧菜单栏👇 ------------------------>
     
+    <div id=side>
+        <div class="r_m_div">
+            <a onclick="showAaplayer()"><i style="font-size: 20px;"><img
+                        src='https://tao173.github.io/media/images/music.png' alt="音乐播放器" class="musicbtn"></i></a>
+        </div>
+        <div class="avatar-border">
+            <img src="https://tao173.github.io/images/avatar.png?v=1648821416257" class="avatar">
+        </div>
+        <div class="sitename">Tao</div>
+        <span class="description" data-text='["温故而知新"]'>&nbsp;</span>
+        <div class="siteinfocontainer">
+            <span class="siteinfo">文章</span>
+            <span class="siteinfo">标签</span>
+        </div>
+        <div class="siteinfocontainer">
+            <span class="siteinfo" id="siteinfo-postsnum"></span>
+            <span class="siteinfo">1</span>
+        </div>
+        
+        <div class="search">
+            <!-- <input type="text" class="search-input" placeholder="标题搜索(●'◡'●)" /> -->
+            <input type="text" class="search-input" placeholder="标题搜索 ⚆_⚆ つ♡">
+            <div class="search-results"></div>
+        </div>
+        
+    <div class="share-button">
+        <span></span>
+        
+        
+        
+        
+        
+        
+        
+        
+    </div>
+    <div id="qq" style="display:none"></div>
+    <!------------ 加载菜单按钮👇 ------------------------->
+    <div class="menucontainer">
+        
+        
+        <div class="mchocie description">
+            <a data-pjax href="/" class="menubutton" style="margin-right: 15px;">
+                <i><img class="icon menuicon" src="" alt="首页"></i>&nbsp;<span
+                    data-text="首页">首页</span>
+            </a>
+        </div>
+        
+        
+        
+        <div class="mchocie description">
+            <a data-pjax href="/archives" class="menubutton" style="margin-right: 15px;">
+                <i><img class="icon menuicon" src="" alt="归档"></i>&nbsp;<span
+                    data-text="归档">归档</span>
+            </a>
+        </div>
+        
+        
+        
+        <div class="mchocie description">
+            <a data-pjax href="/tags" class="menubutton" style="margin-right: 15px;">
+                <i><img class="icon menuicon" src="" alt="标签"></i>&nbsp;<span
+                    data-text="标签">标签</span>
+            </a>
+        </div>
+        
+        
+        
+        <div class="mchocie description">
+            <a data-pjax href="/post/about" class="menubutton" style="margin-right: 15px;">
+                <i><img class="icon menuicon" src="" alt="关于"></i>&nbsp;<span
+                    data-text="关于">关于</span>
+            </a>
+        </div>
+        
+        
+
+        
+        
+        
+        <div class="mchocie description">
+            <a data-pjax href="https://tao173.github.io/friends" class="menubutton" style="margin-right: 15px;">
+                <i><img class="icon menuicon" src="" alt="友人帐"></i>&nbsp;<span data-text="友人帐">友人帐</span>
+            </a>
+        </div>
+        
+        <!--  -->
+    </div>
+    <!------------ 加载菜单按钮👆 ------------------------->
+    <hr>
+    <style>
+    .copyright {
+        font-size: 15px;
+        color: #d9d9d9;
+    }
+
+
+    @media screen and (min-width: 1200px) {
+        .foot {
+            width: 100%;
+            height: 130px;
+        }
+    }
+
+    @media screen and (max-width: 1200px) {
+        .foot {
+            display: none;
+        }
+    }
+</style>
+
+<body>
+    <div class="foot">
+        <div id="footinfo"> | Theme: <a
+                href="https://github.com/850552586/gridea-theme-fog">Fog</a>
+            <div>
+                
+                <div id="sitegotimeDate">载入天数...</div>
+                <div id="sitegotimes">载入时分秒...</div>
+                <div id="cussitetime" style="display:none">02/22/2020</div>
+                
+            </div>
+            <div>
+                
+                <script async
+                    src="https://cdn.jsdelivr.net/gh/850552586/ericamcdn@0.1/js/busuanzi.pure.mini.js"></script>
+                <div id="vistornum" style="margin:0">
+                    <span id="busuanzi_container_site_uv">
+                        <i class="fa fa-heart" aria-hidden="true" style="color: red;"></i> 总访问量:<span
+                            id="busuanzi_value_site_pv"></span>&nbsp;&nbsp;|&nbsp;&nbsp;
+                        <i class="fa fa-user-o" aria-hidden="true"></i> 访问人数:<span id="busuanzi_value_site_uv"></span>
+                    </span>
+                </div>
+                
+            </div>
+            <div class="copyright" style="color:white;text-align: center;">Copyright © 2020  备案号: 鄂ICP备...号
+            </div>
+        </div>
+
+
+
+    </div>
+</body>
+
+<script>
+    //----------------------站点运行时间
+    var now = new Date();
+
+    function createtime() {
+        var sitegotime = document.getElementById("cussitetime").innerHTML + " 00:00:00";
+        var grt = new Date(sitegotime); //此处修改你的建站时间或者网站上线时间 
+        now.setTime(now.getTime() + 250);
+        days = (now - grt) / 1000 / 60 / 60 / 24;
+        dnum = Math.floor(days);
+        hours = (now - grt) / 1000 / 60 / 60 - (24 * dnum);
+        hnum = Math.floor(hours);
+        if (String(hnum).length == 1) {
+            hnum = "0" + hnum;
+        }
+        minutes = (now - grt) / 1000 / 60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes);
+        if (String(mnum).length == 1) {
+            mnum = "0" + mnum;
+        }
+        seconds = (now - grt) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds);
+        if (String(snum).length == 1) {
+            snum = "0" + snum;
+        }
+        document.getElementById("sitegotimeDate").innerHTML = "本站已安全运行 " + dnum + " 天 ";
+        document.getElementById("sitegotimes").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+    }
+
+    let intervalId = setInterval("createtime()", 250);
+</script>
+
+    </div>
+
+    <img class="moon" src="https://tao173.github.io/media/images/moon.png" onclick="moonlight()">
+    <script src="https://tao173.github.io/media/js/wordshow.js"></script>
+    
     <!--------------- 左侧菜单栏👆 ------------------------>
 
     <!----------------- 顶部菜单栏👇 ------------------------>
-    
-    <div>
-        <nav class="navbar navbar-inverse navbar-fixed-top navbartop">
-            <div class="container-fluid">
-                <!-- Brand and toggle get grouped for better mobile display -->
-                <div class="navbar-header">
-                    <a data-pjax class="navbar-brand" href="https://tao173.github.io"
-                        style="font-size:21px">Tao&nbsp;&nbsp;|&nbsp;&nbsp;</a>
-                    <a class="navbar-brand" href=""
-                        style="font-size:15px;font-family:kaiti">温故而知新</a>
-                </div>
-
-                <!-- Collect the nav links, forms, and other content for toggling -->
-                <div class="collapse navbar-collapse">
-                    
-                    <div class="search nav navbar-nav" style="margin-top:8px">
-                        <!-- <input type="text" class="search-input" placeholder="标题搜索(●'◡'●)" /> -->
-                        <input type="text" class="search-input"
-                            placeholder="搜索 ⚆_⚆">
-                        <div class="search-results"></div>
-                    </div>
-                    
-                <div class="search nav navbar-nav searchtop">
-                <a title="text" onclick="document.getElementById('socialMenu').style.display='block'"><i><img class="social"
-                    src="https://tao173.github.io/media/images/social.png"></i></a>
-                    <a onclick="showAaplayer()"><i style="font-size: 20px;"><img
-                                src='https://tao173.github.io/media/images/music.png' alt="音乐播放器"
-                                class="musicbtn musictop"></i></a>
-                </div>
-                <ul class="nav navbar-nav" style="float: right;margin-right:5%">
-                    
-                    
-                    <li>
-                        <a data-pjax href="/"  class="menutopbutton">
-                            <i style="font-size: 40px;"><img class="icon menuicon" src="" alt="首页"></i>
-                            首页
-                        </a>
-                    </li>
-                    
-                    
-                    
-                    <li>
-                        <a data-pjax href="/archives"  class="menutopbutton">
-                            <i style="font-size: 40px;"><img class="icon menuicon" src="" alt="归档"></i>
-                            归档
-                        </a>
-                    </li>
-                    
-                    
-                    
-                    <li>
-                        <a data-pjax href="/tags"  class="menutopbutton">
-                            <i style="font-size: 40px;"><img class="icon menuicon" src="" alt="标签"></i>
-                            标签
-                        </a>
-                    </li>
-                    
-                    
-                    
-                    <li>
-                        <a data-pjax href="/post/about"  class="menutopbutton">
-                            <i style="font-size: 40px;"><img class="icon menuicon" src="" alt="关于"></i>
-                            关于
-                        </a>
-                    </li>
-                    
-                    
-                    
-                    
-                    
-                    <!--  -->
-                  <li><img src="https://tao173.github.io/images/avatar.png?v=1648524385496" alt=""
-                    class="menutopavatar"></li>
-                </ul>
-            </div><!-- /.navbar-collapse -->
-    </div><!-- /.container-fluid -->
-    </nav>
-    <div id="socialMenu">
-        <div class="animate">
-            <div class="socialContainer">
-                
-                <a href="https://github.com/Tao173" target="_blank"><i style="font-size: 40px;"><img
-                            class="icon " src="https://tao173.github.io/media/images/github.png" alt=""></i></a>
-                
-                
-                <a onclick="showqq()" style="cursor:pointer"><i style="font-size: 40px;"><img class="icon"
-                            src="https://tao173.github.io/media/images/QQ.png" alt=""></i></a>
-                
-                
-                <a href="https://github.com/Tao173" target="_blank"><i style="font-size: 40px;"><img
-                            class="icon" src="https://tao173.github.io/media/images/zh.png" alt=""></i></a>
-                
-                
-                <a href="https://github.com/Tao173" target="_blank"><i style="font-size: 40px;"><img
-                            class="icon" src="https://tao173.github.io/media/images/bilibili.png" alt=""></i></a>
-                
-                
-                <a onclick="showWechat()"><i style="font-size: 40px;"><img class="icon"
-                            src="https://tao173.github.io/media/images/wechat.png" alt=""></i></a>
-                
-                
-                <a href="https://github.com/Tao173" target="_blank"><i style="font-size: 40px;"><img
-                            class="icon" src="https://tao173.github.io/media/images/weibos.png" alt=""></i></a>
-                
-                
-                <a href="https://github.com/Tao173" target="_blank"><i style="font-size: 40px;"><img class="icon"
-                            src="https://tao173.github.io/media/images/wyy.png" alt=""></i></a>
-                
-                
-            </div>
-            <div id="qq" style="display:none">https://github.com/Tao173</div>
-        </div>
-    </div>
-    <img class="moon" src="https://tao173.github.io/media/images/moon.png" onclick="moonlight()">
-    <script>
-        var social = document.getElementById('socialMenu');
-        var fancybox = document.getElementsByClassName('fancybox-stage');
-        // 鼠标点击模型外区域关闭登录框
-        window.onclick = function (event) {
-            if (event.target == social) {
-                social.style.display = "none";
-            }
-        }
-    </script>
-    </div>
     
     <!----------------- 顶部菜单栏👆 ------------------------>
 
@@ -475,7 +487,7 @@ Gridea 主页
 <!------ 根据自定义配置声明变量👇 --------------------->
     
     <script>
-        var postnumChoice = false
+        var postnumChoice = true
     </script>
     
     
@@ -539,19 +551,14 @@ Gridea 主页
     
     
     
-    Hello Gridea
-    <script>
-        postsnum += 1
-    </script>
-    
     
     </div>
     
         <script>
-            change_topmenu()
-            var menupos = 'top'
+            var menupos = 'left';
+            $("#siteinfo-postsnum").html(postsnum);
         </script>
-        
+    
     <script>
         let commentsHide = false
     </script>
@@ -582,7 +589,7 @@ Gridea 主页
     get();
 
     function get() {
-        var t = JSON.parse('[{"author":"","img":"","text":"","time":""}]');
+        var t = JSON.parse('[]');
         talkindex = t.length - 1;
         for (var i = 0; i <= t.length - 1; i++) {
             var d = {};
@@ -651,7 +658,7 @@ Gridea 主页
     }
 
     function showWechat() {
-        var wechat = 'https://github.com/Tao173';
+        var wechat = '';
         alert("博主微信号：" + wechat);
         return false;
     }
@@ -1019,11 +1026,9 @@ menulist.eq(i).show();
             $(".markdownIt-TOC li a").css("color","white")
             $(".text p, .text ul").css("color","white")
             $("#articlecontent").css("color","white")
-            $(".post-copyright").css("background","black")
-            $('blockquote').css("background","black")
-            $("#articlecontent").css("background","rgba(0,0,0,0.9)")
-            $(".shareContainer").css("background","black")
-            $(".share").css("background","black")
+            $(".post-copyright").css("background","rgba(10,10,10,0.5)")
+            $('blockquote').css("background","rgba(10,10,10,0.6)")
+            $("#articlecontent").css("background","rgba(10,10,10,0.5)")
             moonlightState = true
             $(".moon").attr("src","https://tao173.github.io/media/images/sun.png")
         }else{
@@ -1034,8 +1039,6 @@ menulist.eq(i).show();
             $(".post-copyright").css("background","#f9f9f9")
             $('blockquote').css("background","#eff8f0")
             $("#articlecontent").css("background","white")
-            $(".shareContainer").css("background","white")
-            $(".share").css("background","white")
             $(".moon").attr("src","https://tao173.github.io/media/images/moon.png")
             $('body').css("background","white")
             moonlightState = false
@@ -1047,11 +1050,18 @@ menulist.eq(i).show();
 
             <!-- ----------------左侧菜单栏html 👇-------------------------------------->
             
-            <!--------------- 顶部菜单栏html👇--------->
             <div>
-                <div class="col-lg-3"></div>
+                <div id="tab1" class="tab">
+                    <div class="bars">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                    <div class="close"></div>
+                </div>
+                <div class="col-md-1 col-lg-3"></div>
                 <!-- main标签，pjax渲染时加载以下内容👇 -->
-                <div id="main" class="col-xs-12 col-sm-12 col-md-12  col-lg-6 posttop" style="padding:0;">
+                <div id="main" class="col-xs-12 col-sm-12 col-md-12 col-lg-7" style="padding:0;">
                     <div class="readingmode" onclick="readingmode()">阅</div>
                     <link rel="stylesheet" href="https://tao173.github.io/media/css/font-awesome.css">
 
@@ -1080,6 +1090,8 @@ menulist.eq(i).show();
                 <!-- id 将作为查询条件 -->
                 <div id="pl" style="display:none">https://tao173.github.io/post/hello-gridea/</div>
                 <div id="rootaddr" style="display:none">https://tao173.github.io</div>
+                
+                    
                 
             </div>
             <div class="text ">
@@ -1118,20 +1130,6 @@ menulist.eq(i).show();
         </div>
         
         <div id="otherpost">
-            
-            <a  data-pjax class="prev-post-pc" href="https://tao173.github.io/post/about/"  style="color: black;">
-                <div id="ppcontainer">
-                    
-                    
-                    <img src="/media/images/postdefault.png" style="width: 100%;" class="opimg">
-                    
-                    
-                    <h4 class="optitle">关于</h4>
-                </div>
-            </a>
-            <div class="prev-post">
-                上一篇 <a  data-pjax href="https://tao173.github.io/post/about/">关于</a>
-            </div>
             
             
         </div>
@@ -1201,98 +1199,14 @@ menulist.eq(i).show();
                         </div>
                     </div>
                     <!---------------------------- 评论系统👆 ------------------------->
-
-                    <!-------------- 底部栏信息👇 -------------------->
-                    <div style="margin-top:5vh">
-                        
-                        <style>
-    .copyright {
-        font-size: 15px;
-        color: #d9d9d9;
-    }
-
-
-    @media screen and (min-width: 1200px) {
-        .foot {
-            width: 100%;
-            height: 130px;
-        }
-    }
-
-    @media screen and (max-width: 1200px) {
-        .foot {
-            display: none;
-        }
-    }
-</style>
-
-<body>
-    <div class="foot">
-        <div id="footinfo"> | Theme: <a
-                href="https://github.com/850552586/gridea-theme-fog">Fog</a>
-            <div>
-                
-                <div id="sitegotimeDate">载入天数...</div>
-                <div id="sitegotimes">载入时分秒...</div>
-                <div id="cussitetime" style="display:none">02/22/2022</div>
-                
-            </div>
-            <div>
-                
-            </div>
-            <div class="copyright" style="color:white;text-align: center;">Copyright © 2020  备案号: 鄂ICP备...号
-            </div>
-        </div>
-
-
-
-    </div>
-</body>
-
-<script>
-    //----------------------站点运行时间
-    var now = new Date();
-
-    function createtime() {
-        var sitegotime = document.getElementById("cussitetime").innerHTML + " 00:00:00";
-        var grt = new Date(sitegotime); //此处修改你的建站时间或者网站上线时间 
-        now.setTime(now.getTime() + 250);
-        days = (now - grt) / 1000 / 60 / 60 / 24;
-        dnum = Math.floor(days);
-        hours = (now - grt) / 1000 / 60 / 60 - (24 * dnum);
-        hnum = Math.floor(hours);
-        if (String(hnum).length == 1) {
-            hnum = "0" + hnum;
-        }
-        minutes = (now - grt) / 1000 / 60 - (24 * 60 * dnum) - (60 * hnum);
-        mnum = Math.floor(minutes);
-        if (String(mnum).length == 1) {
-            mnum = "0" + mnum;
-        }
-        seconds = (now - grt) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
-        snum = Math.round(seconds);
-        if (String(snum).length == 1) {
-            snum = "0" + snum;
-        }
-        document.getElementById("sitegotimeDate").innerHTML = "本站已安全运行 " + dnum + " 天 ";
-        document.getElementById("sitegotimes").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
-    }
-
-    let intervalId = setInterval("createtime()", 250);
-</script>
-
-                        
-                    </div>
-                    <!-------------- 底部栏信息👆 -------------------->
                 </div>
                 <!-- main标签，pjax渲染时加载以上内容👆 -->
-                <div class="col-md-2 col-lg-3">
-                </div>
+                <div class="col-md-1 col-lg-2"></div>
                 <div id="bg">
                 </div>
             </div>
-        <!--------------- 顶部菜单栏html👆--------->
-        
+            <!-- ----------------左侧菜单栏html 👆-------------------------------------->
+            
         </div>
         <!-- aplayer播放器加载👇 -->
             
@@ -1311,7 +1225,7 @@ menulist.eq(i).show();
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js"></script>
 <script>
     function aplayerInit() {
-        var aplayerid = "6671216522";
+        var aplayerid = "2794803053";
         var aplayerserver = "netease";
         var aplayerorder = "default";
         var aplayerautoplay = "true";
@@ -1362,10 +1276,10 @@ menulist.eq(i).show();
         <!-- aplayer播放器加载👆 -->
     </div>
     <!-- 背景图加载方式👇 -->
-    <div id="bgchoice" style="display: none">default
+    <div id="bgchoice" style="display: none">link
                 </div>
                 
-                <div id="bgurl" style="display:none">/media/images/bgimg.png</div>
+                <div id="bgurl" style="display:none"></div>
                 
     <!-- 背景图加载方式👆 -->
 </body>
@@ -1426,7 +1340,7 @@ menulist.eq(i).show();
 
 <!------------ 加载全局背景图功能👇（开始时没有写好，这功能有点鸡肋/(ㄒoㄒ)/~~） -->
 <script>
-    var bgchoice = "default"
+    var bgchoice = "link"
     var bg = $('#bg');
     var bgurl = document.getElementById("bgurl").innerHTML;
     if (bgchoice == 'default')
@@ -1445,6 +1359,8 @@ menulist.eq(i).show();
 
 
 
+
+<script src="https://tao173.github.io/media/js/index.js"></script>
 
 
 <script>
