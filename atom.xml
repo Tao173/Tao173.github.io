@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://tao173.github.io</id>
     <title>Tao</title>
-    <updated>2022-04-01T14:23:37.332Z</updated>
+    <updated>2022-04-13T12:50:03.988Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://tao173.github.io"/>
     <link rel="self" href="https://tao173.github.io/atom.xml"/>
@@ -10,6 +10,30 @@
     <logo>https://tao173.github.io/images/avatar.png</logo>
     <icon>https://tao173.github.io/favicon.ico</icon>
     <rights>All rights reserved 2022, Tao</rights>
+    <entry>
+        <title type="html"><![CDATA[360V6]]></title>
+        <id>https://tao173.github.io/post/360v6/</id>
+        <link href="https://tao173.github.io/post/360v6/">
+        </link>
+        <updated>2022-04-05T14:17:08.000Z</updated>
+        <content type="html"><![CDATA[<p>360V6路由刷回原厂固件教程</p>
+<p>方式1:TTL恢复<br>
+设置好TTL模式后 打开Tftpd 执行下面命令 //注意刷入命令中的文件名 根据自己情况自行修改</p>
+<p>tftpboot 0x44000000 360V6_DOG_rootfs-Backup_V4.2.14.3110.bin &amp;&amp; flash rootfs 0x44000000 $filesize<br>
+方式2:uboot恢复<br>
+进入UBOOT，电脑设置好静态 IP，打开192.168.1.1，上传 360V6_DOG_rootfs-Backup_V4.2.14.3110.bin 刷入</p>
+<p>注意事项:<br>
+以上方式选其一:</p>
+<p>刷后如果有密码，尝试输入最初给原厂固件设定的密码，如果错误，请按 reset 键重置；<br>
+大分区用户恢复原厂的 rootfs，无法使用官方的更新；<br>
+其它更多问题未知；按需使用，不熟悉不建议。<br>
+uboot文件获取和刷入查看:https://www.iosoo.com/514.html<br>
+文件下载:<br>
+文件下载地址访问密码:479w</p>
+<p>根据自己版本修改文件名</p>
+<p>注意上面的输入命令 根据自己的路由版本来修改文件名称,然后刷入固件</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[使用 GitHub Actions 云编译 OpenWrt]]></title>
         <id>https://tao173.github.io/post/shi-yong-github-actions-yun-bian-yi-openwrt/</id>
